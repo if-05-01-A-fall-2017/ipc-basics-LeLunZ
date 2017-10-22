@@ -1,0 +1,73 @@
+1. **Race Condition**
+Describe with your own words: What is a race condition?
+For example: two runnables try to run the same code. There is a public variable and the two programs want to write something in there. 
+So in the end only one will get the correct input.
+ALso auf Deutsch, zwei objekte hängen von bestimmten operationen ab, und diese werden zeitlich relativ gleich ausgeführt,
+und das führt zu fehlern im weiteren Programm.
+
+
+2. **Disabling Interrupts**
+   1. Why is it impossible to achieve Mutual Exclusion via disabling interrupts on a multi-core machine?
+Disabling interrupts,another mechanism that achieves mutual
+exclusion,
+is a mechanism where a process disables interrupts before
+entering the critical section and enables the interrupt immediately
+after exiting the critical section. 
+Mutual exclusions is achieved
+because a process is not interrupted during the execution of its
+critical section and thus excludes all other processes from entering
+their critical section. 
+The problems with this method are that it is
+applicable to only uniprocessor systems and important input-output
+events may be mishandled.
+
+Thats what some book writer wrote. My own words for this would be:
+If you disable it on one process, a other process could nevertheless interrupt in the code section. Because the cores don't "talk" to each other.
+
+   2. Why is it dangerous to give user processes the power to disable interrupts?
+	Because its not good, to give someone something, which they never used bevor. And human beeings are capable creating errors.
+   
+3. **Peterson's Solution**
+	1. Play through the two scenarios of the handout of Peterson's solution. Document how it works.
+		called by process zero.
+		other = 1
+		interested[0] = TRUE
+		turn = 1
+		so now its in while and can process.
+		if process 1 interrupts it looks like this
+		called by process one.
+		other = 0
+		interested[1] = TRUE
+		turn = 0
+		so interested[0] is true and turn is the other process so its in while loop.
+		If other process ends interested[0] is false, so process one can process.
+		if both call simultaneosly interested 0 and 1 is True. But only one value is asigned to turn. So only one process will run the code.
+	3. What is the meaning of the variable {\tt turn} in Peterson's solution? When does it have any effect?
+		when both call at the same time, its important. because only one can run the code.
+	4. Extend the given functions such they can handle three processes.
+		static int processes = 3;
+static int maxzones = processes 1;
+int inzone[] = new int[processes]; 
+int last[] = new int[maxzones]; void init()
+{
+int i;
+for(i=0;i<processes;i++)
+{
+inzone[i]=1;
+} 
+}
+
+static void lock(int pid)
+{
+int i,j;
+for(i=0; i<zone;i++)
+{
+inzone[pid]=i; i
+last[i]=pid; 
+for(j=0;j<processes;j++)
+{
+if(j!=pid){ 
+while((last[i]==pid)&&(inzone[j]==(i+1)));
+}
+}
+}
